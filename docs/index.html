@@ -2,69 +2,133 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Rotina da loja</title>
 <link rel="manifest" href="manifest.webmanifest">
+<meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
-:root { --bg:#f6f6f4; --panel:#fff; --fg:#1d1d1b; --mut:#6b6b66; --line:#dcdcd6; --acc:#2563eb; --ok:#16a34a; --bad:#b91c1c; }
-@media (prefers-color-scheme: dark) { :root { --bg:#161615; --panel:#212120; --fg:#f2f2ee; --mut:#a2a29b; --line:#363633; --acc:#6ea0ff; --ok:#4ade80; --bad:#f87171; } }
+:root { --bg:#f4f4f1; --panel:#fff; --fg:#1d1d1b; --mut:#6b6b66; --line:#dcdcd6; --acc:#2563eb; --acc-bg:#e8effd; --ok:#16a34a; --ok-bg:#e7f6ec; --bad:#b91c1c; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --panel:#1f1f1e; --fg:#f2f2ee; --mut:#a2a29b; --line:#363633; --acc:#6ea0ff; --acc-bg:#1b2741; --ok:#4ade80; --ok-bg:#14281b; --bad:#f87171; } }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 18px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-main { max-width: 820px; margin: 0 auto; padding: 20px 16px 48px; }
-h1 { font-size: 1.5rem; margin: 0; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 18px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+main { max-width: 960px; margin: 0 auto; padding: max(20px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(48px, calc(env(safe-area-inset-bottom) + 24px)) max(16px, env(safe-area-inset-left)); }
+h1 { font-size: 1.6rem; margin: 0; }
 .top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.data { color: var(--mut); font-size: .9rem; }
+.data { color: var(--mut); font-size: .95rem; }
 .data::first-letter { text-transform: uppercase; }
-.prog { color: var(--mut); font-size: .95rem; margin-top: 12px; font-variant-numeric: tabular-nums; }
-.bar { height: 8px; background: var(--line); border-radius: 8px; overflow: hidden; margin: 6px 0 18px; }
-.bar i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .25s; }
-.card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 16px 16px; margin-bottom: 16px; }
-.grp { margin: 14px 0 4px; font-size: .8rem; font-weight: 700; color: var(--mut); text-transform: uppercase; letter-spacing: .05em; }
-.quem { display: inline-block; margin-left: 8px; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--acc); color: var(--acc); font-size: .8rem; text-transform: none; letter-spacing: 0; }
-.it { display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid var(--line); }
-.grp + .it { border-top: 0; }
-.box { flex: none; width: 28px; height: 28px; margin-top: 1px; border: 2px solid var(--line); border-radius: 9px; background: var(--panel); display: grid; place-content: center; }
-.box.on { background: var(--ok); border-color: var(--ok); }
-.box.on::after { content: ''; width: 7px; height: 13px; border: solid #fff; border-width: 0 3px 3px 0; transform: rotate(45deg) translate(-1px,-1px); }
-.it.ok .txt > span { color: var(--mut); text-decoration: line-through; }
-.txt { min-width: 0; flex: 1; }
-.acts { margin-top: 10px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
-.acts small { color: var(--mut); font-size: .85rem; }
-.row { display: flex; gap: 10px; flex-wrap: wrap; }
-button { font: inherit; font-weight: 600; font-size: .95rem; min-height: 48px; padding: 10px 18px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; }
+button { font: inherit; font-weight: 600; font-size: 1rem; min-height: 52px; padding: 12px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; }
 button.p { background: var(--acc); border-color: var(--acc); color: #fff; }
-button.l { min-height: 0; padding: 6px 4px; border: 0; background: none; color: var(--mut); font-weight: 500; font-size: .85rem; text-decoration: underline; }
-button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid var(--acc); outline-offset: 2px; }
-img.f { width: 140px; max-width: 100%; border-radius: 12px; border: 1px solid var(--line); cursor: zoom-in; display: block; }
-img.f.big { width: 100%; max-width: 480px; cursor: zoom-out; }
-.msg { color: var(--mut); font-size: .9rem; margin: 6px 0 12px; }
+button.ok { background: var(--ok); border-color: var(--ok); color: #fff; }
+button:disabled { opacity: .45; cursor: default; }
+button.l { min-height: 0; padding: 8px 4px; border: 0; background: none; color: var(--mut); font-weight: 500; font-size: .9rem; text-decoration: underline; }
+button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid var(--acc); outline-offset: 3px; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.msg { color: var(--mut); font-size: .95rem; margin: 12px 0; text-align: center; }
 .msg.e { color: var(--bad); }
-.perm { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; padding: 12px 14px; border: 1px dashed var(--acc); border-radius: 14px; }
-.perm:empty { display: none; }
-.perm small { color: var(--mut); flex: 1 1 200px; }
-.ov { position: fixed; inset: 0; z-index: 10; background: rgba(0,0,0,.9); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 16px; }
-.ov video { max-width: 100%; max-height: 72vh; border-radius: 14px; background: #000; }
-.ov .box2 { background: var(--panel); border-radius: 16px; padding: 20px; width: min(92vw, 360px); display: flex; flex-direction: column; gap: 12px; }
-.ov input { font: inherit; font-size: 1.4rem; letter-spacing: .4em; text-align: center; padding: 10px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); width: 100%; }
-.foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
-/* tela central */
-.menu { display: grid; gap: 16px; margin: 24px 0 20px; }
+
+/* ---------- tela central ---------- */
+.menu { display: grid; gap: 18px; margin: 28px 0 24px; }
 @media (min-width: 700px) { .menu { grid-template-columns: 1fr 1fr; } }
-.menu-i { display: block; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 20px; color: var(--fg); text-decoration: none; }
-.menu-i:active { transform: scale(.99); }
-.menu-i.done { border-color: var(--ok); }
-.menu-i b { display: flex; justify-content: space-between; gap: 10px; font-size: 1.25rem; }
-.menu-i b::after { content: '›'; color: var(--acc); font-size: 1.6rem; line-height: 1; }
-.menu-i small { display: block; color: var(--mut); font-size: .9rem; margin-top: 6px; }
-.menu-i .st { margin-top: 16px; font-size: .9rem; color: var(--mut); font-variant-numeric: tabular-nums; }
-.menu-i .st.alerta { color: var(--acc); font-weight: 600; }
-.menu-i .bar { margin: 8px 0 0; }
-.voltar { display: inline-flex; align-items: center; min-height: 44px; color: var(--acc); font-weight: 600; text-decoration: none; margin-bottom: 4px; }
+.tile { position: relative; display: flex; flex-direction: column; gap: 6px; background: var(--panel); border: 2px solid var(--line); border-radius: 22px; padding: 26px 24px 22px; color: var(--fg); text-decoration: none; min-height: 230px; }
+.tile:active { transform: scale(.99); }
+.tile.agora { border-color: var(--acc); }
+.tile.done { border-color: var(--ok); }
+.tile .ic { font-size: 3rem; line-height: 1; }
+.tile b { font-size: 1.4rem; margin-top: 10px; }
+.tile small { color: var(--mut); font-size: 1rem; }
+.tile .st { margin-top: auto; padding-top: 16px; font-size: 1rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tile .st.alerta { color: var(--acc); }
+.tile .st.feito { color: var(--ok); }
+.tag { position: absolute; top: 18px; right: 18px; background: var(--acc); color: #fff; font-size: .8rem; font-weight: 700; padding: 4px 12px; border-radius: 999px; }
+.bar { height: 10px; background: var(--line); border-radius: 10px; overflow: hidden; margin-top: 8px; }
+.bar i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .3s; }
+
+/* ---------- página da rotina ---------- */
+.voltar { display: inline-flex; align-items: center; gap: 6px; min-height: 48px; padding: 0 18px 0 12px; margin-bottom: 12px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); color: var(--fg); font-weight: 600; text-decoration: none; }
+.cab { display: flex; align-items: center; gap: 14px; }
+.cab .ic { font-size: 2.6rem; line-height: 1; }
+.quem { display: inline-block; margin-top: 6px; padding: 3px 12px; border-radius: 999px; background: var(--acc-bg); color: var(--acc); font-size: .85rem; font-weight: 600; }
+.resumo { margin: 20px 0 6px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-variant-numeric: tabular-nums; }
+.resumo b { font-size: 1.15rem; }
+.resumo span { color: var(--mut); font-size: .95rem; }
+.perm { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 16px 0 0; padding: 12px 16px; border: 1px dashed var(--acc); border-radius: 14px; }
+.perm:empty { display: none; }
+.perm small { color: var(--mut); flex: 1 1 220px; font-size: .95rem; }
+.grade { display: grid; gap: 16px; margin-top: 20px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+.item { display: flex; flex-direction: column; text-align: left; gap: 10px; padding: 0; overflow: hidden; min-height: 210px; border: 2px dashed var(--line); border-radius: 20px; background: var(--panel); font-weight: 500; }
+.item .vis { height: 112px; display: grid; place-items: center; font-size: 3.2rem; background: var(--bg); }
+.item .vis img { width: 100%; height: 112px; object-fit: cover; display: block; }
+.item .nome { padding: 0 16px; font-size: 1.05rem; font-weight: 600; line-height: 1.3; }
+.item .est { margin-top: auto; padding: 0 16px 14px; font-size: .95rem; font-weight: 600; color: var(--acc); }
+.item.feito, .item.conf { border-style: solid; border-color: var(--ok); }
+.item.feito .est, .item.conf .est { color: var(--ok); }
+.item.conf .vis { background: var(--ok-bg); color: var(--ok); }
+.pronto { margin-top: 20px; padding: 16px 18px; border-radius: 16px; background: var(--ok-bg); color: var(--ok); font-weight: 600; text-align: center; }
+.gestor { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 12px; }
+.gestor summary { cursor: pointer; color: var(--mut); font-size: .95rem; padding: 10px 0; list-style-position: inside; }
+.gestor summary.alerta { color: var(--acc); font-weight: 600; }
+.gestor .row { justify-content: flex-start; margin-top: 8px; }
+
+/* ---------- câmera, foto e PIN ---------- */
+.ov { position: fixed; inset: 0; z-index: 10; background: rgba(0,0,0,.92); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); color: #fff; overflow-y: auto; animation: fade .2s ease-out; }
+.ov video, .ov img { max-width: 100%; max-height: 64vh; max-height: 64dvh; border-radius: 16px; background: #000; }
+.ov .tit { font-size: 1.1rem; font-weight: 600; text-align: center; max-width: 640px; }
+.ov .box2 { background: var(--panel); color: var(--fg); border-radius: 18px; padding: 22px; width: min(92vw, 380px); display: flex; flex-direction: column; gap: 12px; }
+.ov .box2 .row { justify-content: flex-start; }
+.ov input { font: inherit; font-size: 1.5rem; letter-spacing: .4em; text-align: center; padding: 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); width: 100%; }
+.foot { display: flex; justify-content: center; margin-top: 8px; }
+/* ícone de câmera */
+.shutter { width: 84px; height: 84px; min-height: 0; padding: 0; border-radius: 50%; background: #fff; color: #1d1d1b; border: 5px solid rgba(255,255,255,.45); background-clip: padding-box; display: grid; place-items: center; }
+.shutter svg { width: 36px; height: 36px; }
+.ov .row { align-items: center; }
+.cam-ic { width: 44px; height: 44px; border-radius: 50%; background: var(--acc); color: #fff; display: grid; place-items: center; }
+.cam-ic svg { width: 22px; height: 22px; }
+
+/* ---------- animações ---------- */
+@keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes entra { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: none } }
+@keyframes pop { 0% { transform: scale(.94) } 55% { transform: scale(1.04) } 100% { transform: scale(1) } }
+@keyframes tracar { to { stroke-dashoffset: 0 } }
+@keyframes cai { 0% { transform: translate(0, 0) rotate(0); opacity: 1 } 100% { transform: translate(var(--dx), 105vh) rotate(var(--r)); opacity: 0 } }
+.entra { animation: entra .28s ease-out; }
+.entra .tile, .entra .item { animation: entra .38s ease-out backwards; animation-delay: calc(var(--n, 0) * 60ms); }
+.item .vis { position: relative; }
+.selo { position: absolute; top: 8px; right: 8px; width: 30px; height: 30px; border-radius: 50%; background: var(--ok); color: #fff; display: grid; place-items: center; box-shadow: 0 2px 6px rgba(0,0,0,.25); }
+.selo svg { width: 18px; height: 18px; }
+.selo path { stroke-dasharray: 24; stroke-dashoffset: 0; }
+.item.novo { animation: pop .45s ease-out; }
+.item.novo .selo path { stroke-dashoffset: 24; animation: tracar .4s .12s ease-out forwards; }
+.pronto:not([hidden]) { animation: entra .35s ease-out; }
+.confete { position: fixed; inset: 0; z-index: 20; pointer-events: none; overflow: hidden; }
+.confete i { position: absolute; top: -14px; width: 9px; height: 14px; border-radius: 2px; animation: cai 1.5s ease-in forwards; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; }
+  .confete { display: none; }
+}
+
+/* ---------- celular ---------- */
+@media (max-width: 520px) {
+  body { font-size: 17px; }
+  h1 { font-size: 1.35rem; }
+  .menu { gap: 14px; margin: 20px 0 16px; }
+  .tile { min-height: 190px; padding: 22px 20px 18px; }
+  .grade { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .item { min-height: 190px; }
+  .item .nome { padding: 0 12px; font-size: 1rem; }
+  .item .est { padding: 0 12px 12px; font-size: .88rem; }
+  .row button:not(.shutter) { flex: 1 1 140px; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .ov { flex-direction: row; flex-wrap: wrap; gap: 10px 18px; }
+  .ov .tit { flex: 1 0 100%; font-size: 1rem; }
+  .ov video, .ov img { max-height: 62dvh; max-width: 62vw; }
+  .shutter { width: 68px; height: 68px; }
+}
 </style>
 </head>
 <body>
@@ -79,13 +143,19 @@ img.f.big { width: 100%; max-width: 480px; cursor: zoom-out; }
   <!-- Página de uma rotina -->
   <section id="pag" hidden>
     <a class="voltar" href="#">‹ Início</a>
-    <div class="top"><h1 id="titulo"></h1><span class="data" id="data2"></span></div>
-    <div class="prog" id="prog"></div>
+    <div class="cab"><span class="ic" id="pag-ic" aria-hidden="true"></span><div><h1 id="titulo"></h1><span class="quem" id="quem"></span></div></div>
+    <div class="resumo"><b id="prog"></b><span>Toque em cada item e tire a foto</span></div>
     <div class="bar" aria-hidden="true"><i id="fill"></i></div>
     <div class="perm" id="perm"></div>
-    <div class="card" id="lista"></div>
-    <div class="row" style="margin-bottom:10px"><button class="p" id="conferir" type="button" hidden>Conferir e apagar as fotos (gestor)</button></div>
-    <div class="foot"><button class="l" id="limpar" type="button">Limpar esta lista</button></div>
+    <div class="grade" id="grade"></div>
+    <div class="pronto" id="pronto" hidden></div>
+    <details class="gestor" id="gestor">
+      <summary id="gestor-sum">Área do gestor</summary>
+      <div class="row">
+        <button class="p" id="conferir" type="button">Conferir e apagar as fotos</button>
+        <button id="limpar" type="button">Limpar esta lista</button>
+      </div>
+    </details>
   </section>
 
   <div class="msg" id="msg" role="status" hidden></div>
@@ -94,49 +164,56 @@ img.f.big { width: 100%; max-width: 480px; cursor: zoom-out; }
 <script>
 /* ============ ROTINAS (edite aqui) ============
    Cada rotina vira um botão na tela central e uma página.
-   foto:true  -> o responsável tira a foto e dá o check (sem senha). O gestor depois confere com o PIN e as fotos são apagadas.
-   foto:false -> caixinha simples de marcar. */
+   Todo item pede foto: o Rodrigo tira a foto e confirma; o gestor confere com o PIN e as fotos são apagadas.
+   i = ícone do item, t = texto do item. */
 const ROTINAS = {
   abertura: {
-    titulo: 'Abertura Loja · Logística',
-    resumo: 'Área dos entregadores, máquinas, taxas e mensagem do dia',
-    grupos: [
-      { grupo: 'Área dos entregadores', quem: 'Rodrigo Neves · CLT', itens: [
-        { t: 'Posicionar os cones no espaço onde ficam as motos.', foto: true },
-        { t: 'Posicionar uma sacola de lixo na árvore onde os entregadores costumam ficar parados.', foto: true },
-        { t: 'Posicionar o protetor solar na janela do delivery.', foto: true }
-      ] },
-      { grupo: 'Conferências', quem: 'Responsável de abertura', itens: [
-        { t: 'Conferir se as máquinas de cartão estão todas carregadas.', foto: false },
-        { t: 'Conferir como estão as taxas de entrega.', foto: false },
-        { t: 'Enviar a mensagem do dia aos entregadores (painel de planejamento).', foto: false }
-      ] },
-      { grupo: 'Início das rotas', quem: 'Gestor de plantão', itens: [
-        { t: 'Começar a mandar as rotas do sistema.', foto: false }
-      ] }
+    titulo: 'Abertura Loja · Logística', icone: '☀️', resumo: 'Montar a área dos entregadores', quem: 'Rodrigo',
+    itens: [
+      { i: '🚧', t: 'Posicionar os cones no estacionamento' },
+      { i: '🗑️', t: 'Colocar a sacola de lixo na árvore dos entregadores' },
+      { i: '☕', t: 'Colocar a garrafa de café' },
+      { i: '🥄', t: 'Colocar o açúcar com a colher' },
+      { i: '🥤', t: 'Colocar os copos descartáveis' }
     ]
   },
   fechamento: {
-    titulo: 'Fechamento Loja · Logística',
-    resumo: 'Passos do Rodrigo para fechar a noite',
-    grupos: [
-      { grupo: 'Fechar a noite', quem: 'Rodrigo Neves · CLT', itens: [
-        { t: 'Guardar os cones.', foto: true },
-        { t: 'Guardar as cadeiras.', foto: true },
-        { t: 'Limpar a mesa do café.', foto: true },
-        { t: 'Recolher a sacola de lixo da árvore.', foto: true },
-        { t: 'Recolher o protetor solar da janela do delivery.', foto: true }
-      ] }
+    titulo: 'Fechamento Loja · Logística', icone: '🌙', resumo: 'Guardar tudo no fim da noite', quem: 'Rodrigo',
+    itens: [
+      { i: '🚧', t: 'Recolher os cones do estacionamento' },
+      { i: '🗑️', t: 'Tirar a sacola de lixo da árvore' },
+      { i: '☕', t: 'Guardar a garrafa de café' },
+      { i: '🥄', t: 'Guardar o açúcar e a colher' },
+      { i: '🥤', t: 'Guardar os copos descartáveis' },
+      { i: '🪑', t: 'Subir de volta as cadeiras dos entregadores' }
     ]
   }
 };
+const CAM_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg>';
+const CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let novoK = '';                                    // último item marcado (para animar só ele)
+const vibra = (ms) => { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) {} };
+const anima = (s) => { s.classList.remove('entra'); void s.offsetWidth; s.classList.add('entra'); setTimeout(() => s.classList.remove('entra'), 900); };
+const confete = () => {
+  if (reduz) return;
+  const c = el('div', 'confete'), cores = ['var(--acc)', 'var(--ok)', '#f59e0b', '#ec4899'];
+  for (let n = 0; n < 28; n++) {
+    const i = el('i'); i.style.left = (Math.random() * 100) + '%'; i.style.background = cores[n % 4];
+    i.style.setProperty('--dx', (Math.random() * 120 - 60) + 'px'); i.style.setProperty('--r', (Math.random() * 720 - 360) + 'deg');
+    i.style.animationDelay = (Math.random() * .35) + 's'; c.append(i);
+  }
+  document.body.append(c); setTimeout(() => c.remove(), 2200);
+};
+const HORA_FECHAMENTO = 16;   // a partir dessa hora a tela central destaca o Fechamento
 const PAGS = Object.keys(ROTINAS);
 const ITENS = {};
-PAGS.forEach(pg => { const l = []; ROTINAS[pg].grupos.forEach((g, gi) => g.itens.forEach(it => l.push({ ...it, gi, pg, k: pg + ':' + l.length }))); ITENS[pg] = l; });
+PAGS.forEach(pg => { ITENS[pg] = ROTINAS[pg].itens.map((it, n) => ({ ...it, pg, k: pg + ':' + n })); });
 
 /* ============ armazenamento local (só neste tablet) ============ */
-const KEY = 'rotina-loja-v2', PINKEY = 'rotina-loja-pin';
+const KEY = 'rotina-loja-v3', PINKEY = 'rotina-loja-pin';
 const diaSP = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(new Date());
+const horaSP = () => Number(new Intl.DateTimeFormat('en-GB', { timeZone: 'America/Sao_Paulo', hour: '2-digit', hourCycle: 'h23' }).format(new Date()));
 let hoje = diaSP();
 let mem = { dia: hoje, s: {} };           // plano B se o navegador bloquear o armazenamento
 const ler = (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } };
@@ -152,8 +229,13 @@ const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) 
 const btn = (txt, fn, cls) => { const b = el('button', cls, txt); b.type = 'button'; b.addEventListener('click', fn); return b; };
 const aviso = (t, erro) => { const m = $('msg'); m.textContent = t || ''; m.hidden = !t; m.className = 'msg' + (erro ? ' e' : ''); };
 const dataHoje = () => new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', weekday: 'long', day: '2-digit', month: 'long' }).format(new Date());
-const pagina = () => { const h = location.hash.slice(1); return ROTINAS[h] ? h : ''; };
+const hhmm = (iso) => new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' }).format(new Date(iso));
+const doHash = () => { const h = location.hash.slice(1); return ROTINAS[h] ? h : ''; };
+let atual = doHash();                       // página aberta (não depende só do #, que alguns navegadores/visualizadores bloqueiam)
+const pagina = () => atual;
+const ir = (pg) => { atual = pg; try { location.hash = pg ? '#' + pg : ''; } catch (e) {} aviso(''); render(true); };
 const itemDe = (k) => ITENS[k.split(':')[0]].find(x => x.k === k);
+const overlay = () => { const ov = el('div', 'ov'); ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); document.body.appendChild(ov); return ov; };
 
 /* ---- metadados EXIF (data, hora e passo) gravados dentro do JPEG ---- */
 const agoraSP = () => {   // data/hora de São Paulo
@@ -207,7 +289,7 @@ const reduzir = (fonte, descricao) => new Promise((ok, erro) => {
   img.src = url;
 });
 
-/* ============ câmera ============ */
+/* ============ câmera: tirar -> ver -> confirmar ============ */
 const temCam = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
 let camOk = false;
 const pedirCam = async () => {
@@ -215,52 +297,67 @@ const pedirCam = async () => {
   try { const st = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false }); camOk = true; return st; }
   catch (e) { return null; }
 };
-const guardarFoto = async (k, fonte) => {
-  try { const it = itemDe(k), r = ROTINAS[it.pg], g = r.grupos[it.gi];
-    est.s[k] = { estado: 'enviada', foto: await reduzir(fonte, `${r.titulo} | ${it.t}${g.quem ? ' | ' + g.quem : ''}`), em: new Date().toISOString() }; salvar(); aviso(''); }
-  catch (e) { aviso('Não deu para ler a foto. Tente de novo.', true); }
-  if (pagina()) { desenha(pagina()); atualizaPerm(pagina()); }
+const descricaoDe = (it) => { const r = ROTINAS[it.pg]; return `${r.titulo} | ${it.t} | ${r.quem}`; };
+const confirmar = (k, foto) => {                 // mostra a foto tirada: está certo ou tirar de novo
+  const it = itemDe(k), ov = overlay(), im = el('img'); im.src = foto; im.alt = 'Foto tirada';
+  const row = el('div', 'row');
+  row.append(
+    btn('✔ Está certo', () => { ov.remove(); novoK = k; est.s[k] = { estado: 'feito', foto, em: new Date().toISOString() }; salvar(); aviso(''); desenha(it.pg); vibra(35); const sc = situacao(it.pg); if (sc.feitos === sc.total) { vibra([60, 40, 90]); confete(); } }, 'ok'),
+    btn('↺ Tirar de novo', () => { ov.remove(); tirarFoto(k); }),
+    btn('Cancelar', () => ov.remove()));
+  ov.append(el('div', 'tit', it.i + ' ' + it.t), im, row);
 };
-const viaArquivo = (k) => {
+const processar = async (k, fonte) => {
+  try { confirmar(k, await reduzir(fonte, descricaoDe(itemDe(k)))); }
+  catch (e) { aviso('Não deu para ler a foto. Tente de novo.', true); }
+};
+const viaArquivo = (k) => {                      // plano B: câmera do sistema
   const i = el('input'); i.type = 'file'; i.accept = 'image/*'; i.setAttribute('capture', 'environment');
-  i.addEventListener('change', () => { if (i.files && i.files[0]) guardarFoto(k, i.files[0]); });
+  i.addEventListener('change', () => { if (i.files && i.files[0]) processar(k, i.files[0]); });
   i.click();
 };
 const tirarFoto = async (k) => {
-  const st = await pedirCam();
-  if (!st) { aviso('Câmera não liberada. Usando a câmera do sistema.'); viaArquivo(k); return; }
+  const it = itemDe(k), st = await pedirCam();
+  atualizaPerm(it.pg);
+  if (!st) { viaArquivo(k); return; }
   aviso('');
-  const ov = el('div', 'ov'), v = el('video'); v.autoplay = true; v.playsInline = true; v.muted = true; v.srcObject = st;
+  const ov = overlay(), v = el('video'); v.autoplay = true; v.playsInline = true; v.muted = true; v.srcObject = st;
   const fecha = () => { st.getTracks().forEach(t => t.stop()); ov.remove(); };
   const row = el('div', 'row');
-  row.append(
-    btn('📸 Capturar', async () => {
-      if (!v.videoWidth) return;
-      const c = el('canvas'); c.width = v.videoWidth; c.height = v.videoHeight; c.getContext('2d').drawImage(v, 0, 0);
-      const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', .9)); fecha(); guardarFoto(k, blob);
-    }, 'p'),
-    btn('Cancelar', fecha));
-  ov.append(v, row); document.body.appendChild(ov);
+  const sh = btn('', async () => {
+    if (!v.videoWidth) return;
+    const c = el('canvas'); c.width = v.videoWidth; c.height = v.videoHeight; c.getContext('2d').drawImage(v, 0, 0);
+    const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', .9)); fecha(); processar(k, blob);
+  }, 'shutter');
+  sh.innerHTML = CAM_SVG; sh.setAttribute('aria-label', 'Tirar foto');
+  row.append(sh, btn('Cancelar', fecha));
+  ov.append(el('div', 'tit', it.i + ' ' + it.t), v, row);
+};
+const verFoto = (k) => {                         // item já feito: ver a foto ou refazer
+  const it = itemDe(k), e = est.s[k], ov = overlay(), im = el('img'); im.src = e.foto; im.alt = 'Foto do item';
+  const row = el('div', 'row');
+  row.append(btn('↺ Tirar de novo', () => { ov.remove(); tirarFoto(k); }), btn('Fechar', () => ov.remove(), 'p'));
+  ov.append(el('div', 'tit', `${it.i} ${it.t} · foto das ${hhmm(e.em)}`), im, row);
 };
 const atualizaPerm = async (pg) => {
   const p = $('perm'); p.textContent = '';
-  if (!temCam || camOk || !ITENS[pg].some(it => it.foto)) return;
+  if (!temCam || camOk || !pg) return;
   let s = 'prompt';
   try { if (navigator.permissions) s = (await navigator.permissions.query({ name: 'camera' })).state; } catch (e) {}
-  if (s === 'granted' || s === 'denied') return;
-  p.append(el('small', '', 'Para tirar as fotos, libere a câmera deste tablet.'));
+  if (s !== 'prompt' || camOk) return;
+  p.append(el('small', '', 'Antes de começar, libere a câmera deste tablet.'));
   p.append(btn('Permitir câmera', async () => { const st = await pedirCam(); if (st) st.getTracks().forEach(t => t.stop()); atualizaPerm(pg); }, 'p'));
 };
 
-/* ============ PIN do gestor (para conferir) ============ */
+/* ============ PIN do gestor ============ */
 const pedirPin = (titulo, criar) => new Promise((res) => {
-  const ov = el('div', 'ov'), b = el('div', 'box2');
+  const ov = overlay(), b = el('div', 'box2');
   const i = el('input'); i.type = 'password'; i.inputMode = 'numeric'; i.maxLength = 4; i.autocomplete = 'off'; i.setAttribute('aria-label', 'PIN de 4 números');
   const e = el('small', '', criar ? 'Escolha 4 números. Só o gestor deve saber.' : ''); e.style.color = 'var(--mut)';
   const r = el('div', 'row'), fim = (v) => { ov.remove(); res(v); };
   r.append(btn('OK', () => { if (/^\d{4}$/.test(i.value)) fim(i.value); else { e.textContent = 'Use 4 números.'; e.style.color = 'var(--bad)'; } }, 'p'), btn('Cancelar', () => fim(null)));
   i.addEventListener('keydown', ev => { if (ev.key === 'Enter') r.firstChild.click(); });
-  b.append(el('b', '', titulo), i, e, r); ov.append(b); document.body.appendChild(ov); i.focus();
+  b.append(el('b', '', titulo), i, e, r); ov.append(b); i.focus();
 });
 const sha = async (t) => { try { const h = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('rotina:' + t)); return [...new Uint8Array(h)].map(x => x.toString(16).padStart(2, '0')).join(''); } catch (e) { return 'x:' + t; } };
 const checaPin = async () => {
@@ -274,64 +371,55 @@ const checaPin = async () => {
 /* ============ progresso ============ */
 const situacao = (pg) => {
   let feitos = 0, aguardando = 0;
-  ITENS[pg].forEach(it => { const e = est.s[it.k]; if (e && (e.estado === 'feito' || e.estado === 'ok')) feitos++; if (e && e.estado === 'feito') aguardando++; });
-  return { feitos, total: ITENS[pg].length, aguardando };
+  ITENS[pg].forEach(it => { const e = est.s[it.k]; if (e) feitos++; if (e && e.estado === 'feito') aguardando++; });
+  return { feitos, total: ITENS[pg].length, aguardando, conferido: feitos === ITENS[pg].length && !aguardando };
 };
+const textoSituacao = (s) => s.conferido ? 'Tudo conferido ✓' : s.feitos === s.total ? `Tudo pronto · ${s.aguardando} foto(s) para o gestor conferir` : s.feitos ? `${s.feitos} de ${s.total} prontos` : 'Ainda não começou';
 
 /* ============ tela central ============ */
 function inicio() {
   $('data').textContent = dataHoje();
   const M = $('menu'); M.textContent = '';
-  PAGS.forEach(pg => {
-    const r = ROTINAS[pg], s = situacao(pg), pronto = s.feitos === s.total;
-    const a = el('a', 'menu-i' + (pronto ? ' done' : '')); a.href = '#' + pg;
-    a.append(el('b', '', r.titulo), el('small', '', r.resumo));
-    const st = el('div', 'st' + (s.aguardando ? ' alerta' : ''), pronto && !s.aguardando ? 'Tudo pronto ✓' : s.aguardando ? `${s.feitos} de ${s.total} feitos · ${s.aguardando} foto(s) para o gestor conferir` : `${s.feitos} de ${s.total} feitos`);
+  const agora = horaSP() < HORA_FECHAMENTO ? 'abertura' : 'fechamento';
+  PAGS.forEach((pg, n) => {
+    const r = ROTINAS[pg], s = situacao(pg), completo = s.feitos === s.total;
+    const a = el('a', 'tile' + (completo ? ' done' : pg === agora ? ' agora' : '')); a.href = '#' + pg; a.style.setProperty('--n', n);
+    a.addEventListener('click', ev => { ev.preventDefault(); ir(pg); });
+    if (pg === agora && !completo) a.append(el('span', 'tag', 'Agora'));
+    a.append(el('span', 'ic', r.icone), el('b', '', r.titulo), el('small', '', r.resumo));
+    const st = el('span', 'st' + (s.aguardando ? ' alerta' : completo ? ' feito' : ''), textoSituacao(s));
     const bar = el('div', 'bar'), i = el('i'); i.style.width = (s.total ? s.feitos / s.total * 100 : 0) + '%'; bar.append(i);
     a.append(st, bar); M.append(a);
   });
 }
 
 /* ============ página de uma rotina ============ */
-const quando = (iso) => new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(iso)).replace(',', ' às');
 function desenha(pg) {
-  const R = ROTINAS[pg], itens = ITENS[pg];
-  $('titulo').textContent = R.titulo; $('data2').textContent = dataHoje(); document.title = R.titulo;
-  const L = $('lista'); L.textContent = '';
-  let g = -1;
-  itens.forEach(it => {
-    if (it.gi !== g) { g = it.gi; const h = el('div', 'grp', R.grupos[g].grupo); if (R.grupos[g].quem) h.append(el('span', 'quem', R.grupos[g].quem)); L.append(h); }
-    const e = est.s[it.k], feito = e && e.estado === 'feito', conf = e && e.estado === 'ok', env = e && e.estado === 'enviada', ok = feito || conf;
-    const row = el('div', 'it' + (ok ? ' ok' : '')), box = el('i', 'box' + (ok ? ' on' : '')), t = el('div', 'txt');
-    box.setAttribute('aria-hidden', 'true'); t.append(el('span', '', it.t));
-    if (!it.foto) {
-      box.style.cursor = 'pointer'; box.setAttribute('role', 'checkbox'); box.removeAttribute('aria-hidden'); box.setAttribute('aria-label', it.t); box.tabIndex = 0; box.setAttribute('aria-checked', ok);
-      const alt = () => { if (ok) delete est.s[it.k]; else est.s[it.k] = { estado: 'ok', em: new Date().toISOString() }; salvar(); desenha(pg); };
-      box.addEventListener('click', alt); box.addEventListener('keydown', ev => { if (ev.key === ' ' || ev.key === 'Enter') { ev.preventDefault(); alt(); } });
-      t.style.cursor = 'pointer'; t.addEventListener('click', alt);
-    } else {
-      const a = el('div', 'acts');
-      if (conf) a.append(el('small', '', 'Conferido pelo gestor'));
-      else if (feito) {
-        const im = el('img', 'f'); im.src = e.foto; im.alt = 'Foto do passo'; im.addEventListener('click', () => im.classList.toggle('big')); a.append(im);
-        a.append(el('small', '', 'Feito. Aguardando conferência do gestor.'));
-        a.append(el('small', '', 'Foto: ' + quando(e.em)));
-      } else if (env) {
-        const im = el('img', 'f'); im.src = e.foto; im.alt = 'Foto do passo'; im.addEventListener('click', () => im.classList.toggle('big')); a.append(im);
-        a.append(el('small', '', 'Foto: ' + quando(e.em)));
-        const r = el('div', 'row');
-        r.append(btn('✔ Dar check', () => { est.s[it.k] = { ...e, estado: 'feito' }; salvar(); desenha(pg); }, 'p'),
-                 btn('Trocar foto', () => tirarFoto(it.k)));
-        a.append(r);
-      } else { const r = el('div', 'row'); r.append(btn('📷 Tirar foto', () => tirarFoto(it.k), 'p')); a.append(r); }
-      t.append(a);
-    }
-    row.append(box, t); L.append(row);
-  });
-  const s = situacao(pg);
-  $('conferir').hidden = !s.aguardando;
-  $('prog').textContent = s.feitos === s.total ? 'Tudo pronto ✓' : `${s.feitos} de ${s.total} feitos`;
+  const R = ROTINAS[pg], s = situacao(pg);
+  $('titulo').textContent = R.titulo; $('pag-ic').textContent = R.icone; $('quem').textContent = 'Responsável: ' + R.quem; document.title = R.titulo;
+  $('prog').textContent = `${s.feitos} de ${s.total} prontos`;
   $('fill').style.width = (s.total ? s.feitos / s.total * 100 : 0) + '%';
+  const G = $('grade'); G.textContent = '';
+  ITENS[pg].forEach((it, n) => {
+    const e = est.s[it.k], feito = e && e.estado === 'feito', conf = e && e.estado === 'ok';
+    const b = el('button', 'item' + (feito ? ' feito' : conf ? ' conf' : '') + (it.k === novoK ? ' novo' : '')); b.type = 'button'; b.style.setProperty('--n', n);
+    const vis = el('span', 'vis');
+    if (feito) { const im = el('img'); im.src = e.foto; im.alt = ''; vis.append(im); const sl = el('span', 'selo'); sl.innerHTML = CHECK_SVG; vis.append(sl); } else vis.textContent = conf ? '✓' : it.i;
+    const est_ = el('span', 'est', conf ? 'Conferido pelo gestor ✓' : feito ? `Pronto ✓ · foto das ${hhmm(e.em)}` : null);
+    if (!conf && !feito) { const ic = el('span', 'cam-ic'); ic.innerHTML = CAM_SVG; est_.append(ic); }
+    b.append(vis, el('span', 'nome', it.t), est_);
+    b.setAttribute('aria-label', `${it.t}. ${conf ? 'Conferido pelo gestor' : feito ? 'Pronto' : 'Falta tirar a foto'}`);
+    if (conf) b.disabled = true;
+    else b.addEventListener('click', () => feito ? verFoto(it.k) : tirarFoto(it.k));
+    G.append(b);
+  });
+  novoK = '';
+  const P = $('pronto');
+  P.hidden = s.feitos !== s.total;
+  P.textContent = s.conferido ? 'Tudo conferido pelo gestor ✓' : 'Tudo pronto! Avise o gestor para conferir as fotos.';
+  $('conferir').disabled = !s.aguardando;
+  $('conferir').textContent = s.aguardando ? `Conferir e apagar ${s.aguardando} foto(s)` : 'Nenhuma foto para conferir';
+  const sum = $('gestor-sum'); sum.textContent = s.aguardando ? `Área do gestor · ${s.aguardando} foto(s) para conferir` : 'Área do gestor'; sum.className = s.aguardando ? 'alerta' : '';
 }
 
 /* ============ navegação ============ */
@@ -340,14 +428,15 @@ function render(rolar) {
   const pg = pagina();
   $('home').hidden = !!pg; $('pag').hidden = !pg;
   if (pg) { desenha(pg); atualizaPerm(pg); } else { document.title = 'Rotina da loja'; inicio(); }
-  if (rolar) window.scrollTo(0, 0);
+  if (rolar) { window.scrollTo(0, 0); $('gestor').open = false; anima(pg ? $('pag') : $('home')); }
 }
-window.addEventListener('hashchange', () => { aviso(''); render(true); });
+window.addEventListener('hashchange', () => { atual = doHash(); aviso(''); render(true); });
+document.querySelector('.voltar').addEventListener('click', ev => { ev.preventDefault(); ir(''); });
 document.addEventListener('visibilitychange', () => { if (!document.hidden) render(false); });
 
 $('conferir').addEventListener('click', async () => {
   const pg = pagina(); if (!pg || !(await checaPin())) return;
-  ITENS[pg].forEach(it => { const e = est.s[it.k]; if (e && e.estado === 'feito') est.s[it.k] = { estado: 'ok', em: new Date().toISOString() }; });  // a foto some junto
+  ITENS[pg].forEach(it => { const e = est.s[it.k]; if (e && e.estado === 'feito') est.s[it.k] = { estado: 'ok', em: e.em }; });  // a foto some junto
   salvar(); aviso('Conferido. As fotos foram apagadas.'); desenha(pg);
 });
 $('limpar').addEventListener('click', async () => {
@@ -359,7 +448,7 @@ $('trocapin').addEventListener('click', async () => {
   const n = await pedirPin('Novo PIN do gestor', true); if (n) { gravarLS(PINKEY, await sha(n)); aviso('PIN alterado.'); }
 });
 if (!(() => { try { localStorage.setItem('t', '1'); localStorage.removeItem('t'); return true; } catch (e) { return false; } })()) aviso('Este navegador não guarda dados. Ao fechar a página, as marcações se perdem.', true);
-render(false);
+render(true);
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
 </body>
