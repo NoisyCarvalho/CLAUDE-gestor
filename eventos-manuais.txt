@@ -1,0 +1,4 @@
+2026-11-05 (hora nao registrada) | publicacao da v6 recusada pelo GitHub ("fatal error in commit_refs"), na main e em branch nova
+2026-11-05 (hora nao registrada) | publicacao da v6 aceita (53e456d..4a794fa) em nova tentativa
+2026-11-06 | repositorio ajustado: criados LOG.txt, gerar-log.sh e eventos-manuais.txt
+# Para novos eventos, acrescente uma linha: AAAA-MM-DD HH:MM | o que aconteceu

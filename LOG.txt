@@ -1,0 +1,45 @@
+LOG DO REPOSITORIO - Rotina da loja
+Horarios: America/Sao_Paulo (UTC-3). Gerado em 2026-11-06 17:10:55.
+Formato: DATA HORA | commit | descricao   (A = criado, M = alterado, D = apagado)
+
+=== COMMITS ===
+
+2026-11-05 00:27:39 | 4a794fa | Rotina da loja: itens do Rodrigo, foto com EXIF, PIN do gestor (sw v6)
+
+    M docs/index.html
+    M docs/sw.js
+
+2026-11-04 20:41:35 | 53e456d | Fechamento: passos do Rodrigo para fechar a noite
+
+    M docs/index.html
+    M docs/sw.js
+
+2026-11-04 20:37:44 | 3ce446b | Fechamento: passos da janela das 22h conforme decisões do processo
+
+    M docs/index.html
+    M docs/sw.js
+
+2026-11-04 20:37:28 | 01e36e9 | Rotina da loja: tela central com Abertura e Fechamento da logística
+
+    M docs/index.html
+    M docs/sw.js
+
+2026-11-03 20:37:49 | bcf60d0 | Redireciona a raiz para docs/ (funciona com Pages em / ou /docs)
+
+    A index.html
+
+2026-11-03 20:25:04 | 9f39fb0 | Rotina da loja: app instalável (PWA) em docs/
+
+    A docs/.nojekyll
+    A docs/icon-192.png
+    A docs/icon-512.png
+    A docs/icon-maskable-512.png
+    A docs/index.html
+    A docs/manifest.webmanifest
+    A docs/sw.js
+
+=== EVENTOS FORA DO GIT (anotados a mao) ===
+2026-11-05 (hora nao registrada) | publicacao da v6 recusada pelo GitHub ("fatal error in commit_refs"), na main e em branch nova
+2026-11-05 (hora nao registrada) | publicacao da v6 aceita (53e456d..4a794fa) em nova tentativa
+2026-11-06 | repositorio ajustado: criados LOG.txt, gerar-log.sh e eventos-manuais.txt
+# Para novos eventos, acrescente uma linha: AAAA-MM-DD HH:MM | o que aconteceu
