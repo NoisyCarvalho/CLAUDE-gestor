@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Máquina</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#2563eb">
+<link rel="icon" href="icon-192.png">
+<style>
+:root { --bg:#f4f4f1; --panel:#fff; --fg:#1d1d1b; --mut:#6b6b66; --line:#dcdcd6; --acc:#2563eb; --acc-bg:#e8effd; --ok:#16a34a; --ok-bg:#e7f6ec; --warn:#d97706; --warn-bg:#fdf1dc; --bad:#b91c1c; --sh:0 1px 2px rgba(20,20,20,.06),0 10px 30px rgba(20,20,20,.08); }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --panel:#1f1f1e; --fg:#f2f2ee; --mut:#a2a29b; --line:#363633; --acc:#6ea0ff; --acc-bg:#1b2741; --ok:#4ade80; --ok-bg:#14281b; --warn:#fbbf24; --warn-bg:#33270f; --bad:#f87171; --sh:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35); } }
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; min-height: 100dvh; background: var(--bg); color: var(--fg); font: 20px/1.35 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom)); }
+main { width: min(460px, 100%); }
+.card { background: var(--panel); border-radius: 28px; padding: 26px 22px; box-shadow: var(--sh); display: flex; flex-direction: column; gap: 16px; animation: entra .35s ease-out; }
+.ic { width: 76px; height: 76px; border-radius: 22px; display: grid; place-items: center; background: var(--ok-bg); color: var(--ok); }
+.ic.rua { background: var(--acc-bg); color: var(--acc); }
+.ic.outro { background: var(--warn-bg); color: var(--warn); }
+.ic.erro { background: var(--warn-bg); color: var(--warn); }
+.ic svg { width: 44px; height: 44px; }
+h1 { margin: 0; font-size: 2rem; line-height: 1.1; letter-spacing: -.01em; }
+.pill { display: inline-block; align-self: flex-start; padding: 5px 16px; border-radius: 999px; font-size: .95rem; font-weight: 700; background: var(--ok-bg); color: var(--ok); }
+.pill.rua { background: var(--acc-bg); color: var(--acc); }
+.pill.outro { background: var(--warn-bg); color: var(--warn); }
+p { margin: 0; color: var(--mut); }
+label { font-weight: 600; font-size: .95rem; color: var(--mut); }
+input { font: inherit; font-size: 1.15rem; width: 100%; min-height: 60px; padding: 12px 16px; border-radius: 16px; border: 2px solid var(--line); background: var(--bg); color: var(--fg); margin-top: 6px; }
+input:focus { outline: none; border-color: var(--acc); }
+button { font: inherit; font-weight: 700; font-size: 1.2rem; min-height: 68px; padding: 14px 20px; border-radius: 20px; border: 2px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; width: 100%; transition: transform .12s, opacity .15s; }
+button:active { transform: scale(.97); }
+button.p { background: var(--acc); border-color: var(--acc); color: #fff; box-shadow: 0 8px 20px color-mix(in srgb, var(--acc) 35%, transparent); }
+button.ok { background: var(--ok); border-color: var(--ok); color: #fff; box-shadow: 0 8px 20px color-mix(in srgb, var(--ok) 35%, transparent); }
+button:disabled { opacity: .5; box-shadow: none; transform: none; }
+button.l { min-height: 0; width: auto; padding: 6px 4px; border: 0; background: none; color: var(--mut); font-size: .95rem; font-weight: 500; text-decoration: underline; align-self: flex-start; }
+.msg { min-height: 1.3em; color: var(--bad); font-size: .95rem; font-weight: 600; }
+.quem { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 1rem; }
+.quem b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.feito { align-items: center; text-align: center; }
+.feito .ic { width: 96px; height: 96px; border-radius: 50%; }
+.feito .ic svg { width: 56px; height: 56px; }
+.feito .ic path { stroke-dasharray: 26; stroke-dashoffset: 26; animation: tracar .5s .15s ease-out forwards; }
+.carrega { align-items: center; color: var(--mut); }
+.gira { width: 42px; height: 42px; border: 4px solid var(--line); border-top-color: var(--acc); border-radius: 50%; animation: gira .8s linear infinite; }
+@keyframes entra { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: none } }
+@keyframes tracar { to { stroke-dashoffset: 0 } }
+@keyframes gira { to { transform: rotate(360deg) } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; } }
+</style>
+</head>
+<body>
+<main id="app" aria-live="polite"></main>
+<script src="config.js"></script>
+<script>
+const CFG = window.MAQ_CONFIG || {};
+const CODIGO = (new URLSearchParams(location.search).get('q') || '').trim();
+const LS = 'maquinas-entregador-nome';
+const $app = document.getElementById('app');
+const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
+const MAQ = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.6"/><rect x="8.6" y="5.2" width="6.8" height="4" rx=".9"/><path d="M9 13h.01M12 13h.01M15 13h.01M9 16.5h.01M12 16.5h.01M15 16.5h.01"/></svg>';
+const OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const ALERTA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l9 16H3z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>';
+const vibra = (m) => { try { if (navigator.vibrate) navigator.vibrate(m); } catch (e) {} };
+const lerNome = () => { try { return localStorage.getItem(LS) || ''; } catch (e) { return ''; } };
+const gravaNome = (n) => { try { localStorage.setItem(LS, n); } catch (e) {} };
+const limpa = (t) => t.replace(/\s+/g, ' ').trim();
+const nomeOk = (t) => t.length >= 2 && t.length <= 40 && /^[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ .'-]*$/.test(t);
+
+async function rpc(fn, args) {
+  const h = { 'Content-Type': 'application/json', apikey: CFG.anonKey };
+  if (!String(CFG.anonKey).startsWith('sb_')) h.Authorization = 'Bearer ' + CFG.anonKey;
+  const r = await fetch(CFG.url.replace(/\/$/, '') + '/rest/v1/rpc/' + fn, { method: 'POST', headers: h, body: JSON.stringify(args) });
+  if (!r.ok) throw new Error('http ' + r.status);
+  return r.json();
+}
+
+function cartao(cls) { $app.textContent = ''; const c = el('section', 'card' + (cls ? ' ' + cls : '')); $app.append(c); return c; }
+function icone(c, svg, cls) { const i = el('div', 'ic' + (cls ? ' ' + cls : '')); i.innerHTML = svg; c.append(i); }
+
+function aviso(titulo, texto, tentar) {
+  const c = cartao(); icone(c, ALERTA, 'erro'); c.append(el('h1', '', titulo)); if (texto) c.append(el('p', '', texto));
+  if (tentar) { const b = el('button', 'p', 'Tentar de novo'); b.type = 'button'; b.addEventListener('click', carregar); c.append(b); }
+}
+
+async function carregar() {
+  if (!CFG.url || !CFG.anonKey) return aviso('Sistema ainda não configurado', 'Chame o despachante.');
+  if (!CODIGO) return aviso('Leia o QR Code da máquina', 'Use a câmera do celular e aponte para o QR Code colado na máquina.');
+  const c = cartao('carrega'); c.append(el('div', 'gira')); c.append(el('p', '', 'Abrindo...'));
+  let info;
+  try { info = await rpc('qr_info', { p_codigo: CODIGO, p_nome: lerNome() || null }); }
+  catch (e) { return aviso('Sem conexão', 'Confira a internet do celular e tente de novo.', true); }
+  if (!info || !info.ok) {
+    if (info && info.erro === 'sem_maquina') return aviso('Etiqueta sem máquina', 'Esta etiqueta ainda não foi ligada a uma máquina. Chame o despachante.');
+    return aviso('QR Code não reconhecido', 'Chame o despachante.');
+  }
+  tela(info);
+}
+
+function tela(info, msgInicial) {
+  const s = info.status, c = cartao();
+  icone(c, MAQ, s === 'livre' ? '' : s === 'comigo' ? 'rua' : 'outro');
+  c.append(el('h1', '', info.maquina));
+  c.append(el('span', 'pill ' + (s === 'livre' ? '' : s === 'comigo' ? 'rua' : 'outro'), s === 'livre' ? 'Na loja' : s === 'comigo' ? 'Com você' : 'Com outro entregador'));
+  if (s === 'outro') c.append(el('p', '', 'Se esta máquina está com você, escreva seu nome igual ao da retirada. Ou devolva do mesmo jeito.'));
+
+  const nome = lerNome();
+  const bloco = el('div');
+  const lb = el('label', '', 'Seu nome'); lb.htmlFor = 'nome';
+  const inp = el('input'); inp.id = 'nome'; inp.type = 'text'; inp.value = nome; inp.maxLength = 40; inp.autocomplete = 'name'; inp.placeholder = 'Ex.: João Silva'; inp.autocapitalize = 'words';
+  bloco.append(lb, inp); c.append(bloco);
+
+  const msg = el('div', 'msg'); msg.setAttribute('role', 'alert'); msg.textContent = msgInicial || '';
+  const acao = s === 'livre' ? 'saida' : 'volta';
+  const b = el('button', s === 'livre' ? 'ok' : 'p', s === 'livre' ? 'Pegar máquina' : 'Devolver máquina'); b.type = 'button';
+  const confere = () => { const n = limpa(inp.value); b.disabled = !nomeOk(n); return n; };
+  inp.addEventListener('input', () => { msg.textContent = ''; confere(); });
+  // se mudar o nome, confere de novo se a máquina está com essa pessoa
+  inp.addEventListener('change', async () => {
+    const n = limpa(inp.value); if (!nomeOk(n) || s === 'livre') return;
+    try { const i2 = await rpc('qr_info', { p_codigo: CODIGO, p_nome: n }); if (i2 && i2.ok && i2.status !== s) { gravaNome(n); tela(i2); } } catch (e) {}
+  });
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter' && !b.disabled) b.click(); });
+  b.addEventListener('click', async () => {
+    const n = confere(); if (!nomeOk(n)) { msg.textContent = 'Escreva seu nome (só letras).'; return; }
+    b.disabled = true; inp.disabled = true; msg.textContent = '';
+    let r;
+    try { r = await rpc('qr_registrar', { p_codigo: CODIGO, p_nome: n, p_acao: acao }); }
+    catch (e) { msg.textContent = 'Sem conexão. Tente de novo.'; b.disabled = false; inp.disabled = false; return; }
+    if (r && r.ok) { gravaNome(n); vibra([60, 40, 90]); return pronto(r); }
+    const E = { ocupada: 'Outra pessoa acabou de pegar esta máquina.', ja_comigo: 'Esta máquina já está com você.', ja_na_loja: 'Esta máquina já foi devolvida.', nome_invalido: 'Escreva seu nome (só letras).' };
+    msg.textContent = E[r && r.erro] || 'Não deu certo. Chame o despachante.';
+    if (r && ['ocupada', 'ja_comigo', 'ja_na_loja'].includes(r.erro)) { gravaNome(n); setTimeout(carregar, 1800); }
+    else { b.disabled = false; inp.disabled = false; }
+  });
+  c.append(msg, b); confere();
+  if (nome) { const t = el('button', 'l', 'Não sou ' + nome.split(' ')[0]); t.type = 'button'; t.addEventListener('click', () => { inp.value = ''; inp.focus(); confere(); }); c.append(t); }
+  else setTimeout(() => inp.focus(), 250);
+}
+
+function pronto(r) {
+  const c = cartao('feito'); icone(c, OK);
+  c.append(el('h1', '', r.acao === 'saida' ? 'Máquina é sua!' : 'Máquina devolvida!'));
+  c.append(el('p', '', r.maquina + (r.acao === 'saida' ? '. Boa entrega! Para devolver, leia este mesmo QR Code de novo.' : (r.min != null ? '. Ficou ' + (r.min < 1 ? 'menos de 1 minuto' : r.min + ' min') + ' fora. Obrigado!' : '. Obrigado!'))));
+}
+
+carregar();
+</script>
+</body>
+</html>
