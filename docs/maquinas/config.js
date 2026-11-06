@@ -3,5 +3,5 @@
 window.MAQ_CONFIG = {
   url: 'https://gzhvwbvxdaopyruddicm.supabase.co',
   anonKey: 'sb_publishable_ZGkz6uzSMrvQ8iLUO7ML0g_ZItepBd7',
-  siteUrl: 'https://noisycarvalho.github.io/claude-gestor/maquinas/'
+  siteUrl: 'https://noisycarvalho.github.io/CLAUDE-gestor/maquinas/'
 };
