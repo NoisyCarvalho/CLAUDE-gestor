@@ -1,8 +1,15 @@
 LOG DO REPOSITORIO - Rotina da loja
-Horarios: America/Sao_Paulo (UTC-3). Gerado em 2026-11-06 17:30:39.
+Horarios: America/Sao_Paulo (UTC-3). Gerado em 2026-11-06 17:31:20.
 Formato: DATA HORA | commit | descricao   (A = criado, M = alterado, D = apagado)
 
 === COMMITS ===
+
+2026-11-06 17:30:39 | 2e60f5c | Ícones do app em estilo de linhas (SVG) no lugar dos emojis; sw v7
+
+    M LOG.txt
+    M docs/index.html
+    M docs/sw.js
+    M eventos-manuais.txt
 
 2026-11-06 17:10:55 | 040e121 | Adiciona LOG.txt (histórico com horários em texto) e script para atualizá-lo
 
@@ -49,4 +56,5 @@ Formato: DATA HORA | commit | descricao   (A = criado, M = alterado, D = apagado
 2026-11-05 (hora nao registrada) | publicacao da v6 aceita (53e456d..4a794fa) em nova tentativa
 2026-11-06 | repositorio ajustado: criados LOG.txt, gerar-log.sh e eventos-manuais.txt
 2026-11-06 | icones do app trocados de emoji para linhas (SVG, traco branco sobre quadrado vinho #7b0000); sw v7
+2026-11-06 | cor dos icones trocada de vinho para azul escuro (#0b2a7a); sw v8
 # Para novos eventos, acrescente uma linha: AAAA-MM-DD HH:MM | o que aconteceu
