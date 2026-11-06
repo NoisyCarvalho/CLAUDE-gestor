@@ -1,8 +1,14 @@
 LOG DO REPOSITORIO - Rotina da loja
-Horarios: America/Sao_Paulo (UTC-3). Gerado em 2026-11-06 17:10:55.
+Horarios: America/Sao_Paulo (UTC-3). Gerado em 2026-11-06 17:30:39.
 Formato: DATA HORA | commit | descricao   (A = criado, M = alterado, D = apagado)
 
 === COMMITS ===
+
+2026-11-06 17:10:55 | 040e121 | Adiciona LOG.txt (histórico com horários em texto) e script para atualizá-lo
+
+    A LOG.txt
+    A eventos-manuais.txt
+    A gerar-log.sh
 
 2026-11-05 00:27:39 | 4a794fa | Rotina da loja: itens do Rodrigo, foto com EXIF, PIN do gestor (sw v6)
 
@@ -42,4 +48,5 @@ Formato: DATA HORA | commit | descricao   (A = criado, M = alterado, D = apagado
 2026-11-05 (hora nao registrada) | publicacao da v6 recusada pelo GitHub ("fatal error in commit_refs"), na main e em branch nova
 2026-11-05 (hora nao registrada) | publicacao da v6 aceita (53e456d..4a794fa) em nova tentativa
 2026-11-06 | repositorio ajustado: criados LOG.txt, gerar-log.sh e eventos-manuais.txt
+2026-11-06 | icones do app trocados de emoji para linhas (SVG, traco branco sobre quadrado vinho #7b0000); sw v7
 # Para novos eventos, acrescente uma linha: AAAA-MM-DD HH:MM | o que aconteceu
