@@ -12774,7 +12774,7 @@ const todosEventos = async () => {
 const maqDe = (id) => S.maq.find(m => m.id === id);
 const posicoes = () => S.pos;
 const usoRecente = () => { const u = {}; S.ev.forEach(e => { if (e.tipo !== 'volta' && e.ent) u[e.ent] = e.t; }); return u; };
-const urlQR = (cod) => { let b = location.href.split('#')[0].split('?')[0];   // sempre o endereço em que o painel está aberto if (!/\/$/.test(b)) b = b.replace(/[^/]*$/, ''); return new URL('m.html?q=' + cod, b).href; };
+const urlQR = (cod) => { let b = location.href.split('#')[0].split('?')[0]; if (!/\/$/.test(b)) b = b.replace(/[^/]*$/, ''); return new URL('m.html?q=' + cod, b).href; };
 const etqDe = (id) => S.etq.find(e => e.maquina_id === id);
 const codCurto = (c) => c.slice(-4).toUpperCase();
 
