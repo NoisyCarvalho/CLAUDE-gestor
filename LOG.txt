@@ -1,8 +1,71 @@
 LOG DO REPOSITORIO - Rotina da loja
-Horarios: America/Sao_Paulo (UTC-3). Gerado em 2026-11-06 17:31:20.
+Horarios: America/Sao_Paulo (UTC-3). Gerado em 2026-11-07 11:46:57.
 Formato: DATA HORA | commit | descricao   (A = criado, M = alterado, D = apagado)
 
 === COMMITS ===
+
+2026-11-06 20:24:17 | 90b3683 | Máquinas: corrige erro de sintaxe que deixava o painel em branco
+
+    M docs/maquinas/index.html
+
+2026-11-06 20:19:19 | df6ec97 | Máquinas: QR usa o endereço em que o painel está aberto; evita config.js em cache
+
+    M docs/maquinas/index.html
+    M docs/maquinas/m.html
+    M docs/maquinas/sw.js
+
+2026-11-06 20:15:19 | 29642d6 | Máquinas: endereço do site após renomear o repositório para omaquinas
+
+    D docs/docs/maquinas/index.html
+    D docs/docs/maquinas/m.html
+    M docs/maquinas/config.js
+
+2026-11-06 19:56:25 | a9c5893 | Máquinas: endereço com o nome exato do repositório (CLAUDE-gestor)
+
+    M docs/docs/maquinas/index.html
+    M docs/docs/maquinas/m.html
+    M docs/maquinas/config.js
+
+2026-11-06 19:53:56 | 7605ac3 | Máquinas: endereço todo em minúsculas (claude-gestor)
+
+    M docs/docs/maquinas/index.html
+    M docs/docs/maquinas/m.html
+    M docs/maquinas/config.js
+
+2026-11-06 19:50:12 | 50df0ee | Máquinas: redireciona QR Codes antigos (/docs/maquinas/) para o endereço certo
+
+    A docs/docs/maquinas/index.html
+    A docs/docs/maquinas/m.html
+
+2026-11-06 19:47:57 | 9cb1f94 | Máquinas: endereço do site (Pages serve a pasta docs/ como raiz)
+
+    M docs/maquinas/config.js
+
+2026-11-06 19:40:46 | 973073c | Máquinas: novo projeto Supabase
+
+    M docs/maquinas/config.js
+
+2026-11-06 18:27:30 | f112462 | Máquinas: endereço correto do site nos QR Codes (/docs/maquinas/)
+
+    M docs/maquinas/config.js
+
+2026-11-06 18:24:39 | ff812c3 | Máquinas (nuvem): painel da equipe + página do entregador por QR fixo
+
+    A docs/maquinas/config.js
+    A docs/maquinas/icon-192.png
+    A docs/maquinas/icon-512.png
+    A docs/maquinas/icon-maskable-512.png
+    A docs/maquinas/index.html
+    A docs/maquinas/m.html
+    A docs/maquinas/manifest.webmanifest
+    A docs/maquinas/sw.js
+
+2026-11-06 17:31:20 | a81bda4 | Ícones em azul escuro no lugar do vinho; sw v8
+
+    M LOG.txt
+    M docs/index.html
+    M docs/sw.js
+    M eventos-manuais.txt
 
 2026-11-06 17:30:39 | 2e60f5c | Ícones do app em estilo de linhas (SVG) no lugar dos emojis; sw v7
 
@@ -57,4 +120,5 @@ Formato: DATA HORA | commit | descricao   (A = criado, M = alterado, D = apagado
 2026-11-06 | repositorio ajustado: criados LOG.txt, gerar-log.sh e eventos-manuais.txt
 2026-11-06 | icones do app trocados de emoji para linhas (SVG, traco branco sobre quadrado vinho #7b0000); sw v7
 2026-11-06 | cor dos icones trocada de vinho para azul escuro (#0b2a7a); sw v8
+2026-11-07 | repositorio renomeado para omaquinas (feito junto com o painel Maquinas); endereco da Rotina passou a ser noisycarvalho.github.io/omaquinas/ ; o antigo /CLAUDE-gestor/ deixou de abrir
 # Para novos eventos, acrescente uma linha: AAAA-MM-DD HH:MM | o que aconteceu

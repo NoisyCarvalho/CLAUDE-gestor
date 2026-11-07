@@ -3,4 +3,5 @@
 2026-11-06 | repositorio ajustado: criados LOG.txt, gerar-log.sh e eventos-manuais.txt
 2026-11-06 | icones do app trocados de emoji para linhas (SVG, traco branco sobre quadrado vinho #7b0000); sw v7
 2026-11-06 | cor dos icones trocada de vinho para azul escuro (#0b2a7a); sw v8
+2026-11-07 | repositorio renomeado para omaquinas (feito junto com o painel Maquinas); endereco da Rotina passou a ser noisycarvalho.github.io/omaquinas/ ; o antigo /CLAUDE-gestor/ deixou de abrir
 # Para novos eventos, acrescente uma linha: AAAA-MM-DD HH:MM | o que aconteceu
